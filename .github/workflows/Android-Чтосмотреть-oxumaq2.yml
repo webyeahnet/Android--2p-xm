@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-      zqwzbody: ${{ secrets.ZQWZBODY }}
+      
       zqwzbody2: ${{ secrets.ZQWZBODY2 }}
       zqwzbody3: ${{ secrets.ZQWZBODY3 }}
       zqwzbody4: ${{ secrets.ZQWZBODY4 }}
@@ -31,13 +31,7 @@ jobs:
         run: |
           npm install
           
-      - name: '运行 【中青看点自动阅读一】'
-        if: env.ZQWZBODY
-        run: |
-          node Android-Чтосмотреть-oxumaq1.js
-        env:
-          zqwzbody: ${{ secrets.ZQWZBODY }}
-          zq_timebody: ${{ secrets.ZQ_TIMEBODY }}
+     
 
       - name: '运行 【中青看点自动阅读二】'
         if: env.ZQWZBODY2
