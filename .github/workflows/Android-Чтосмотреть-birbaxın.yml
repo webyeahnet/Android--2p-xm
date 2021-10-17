@@ -1,0 +1,29 @@
+name: Android-Чтосмотреть-看看
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '2 0 * * *'
+  watch:
+    types: started
+  repository_dispatch:
+    types: bean_change
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: npm install
+        run: |
+          npm install
+      - name: '运行 【Android-Чтосмотреть-birbaxın】'
+        run: |
+          
+          node Android-Чтосмотреть-birbaxın.js
+        env:
+          zq_cookie: ${{ secrets.zq_cookie }}
