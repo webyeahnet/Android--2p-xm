@@ -19,12 +19,12 @@ jobs:
       zqwzbody2: ${{ secrets.ZQWZBODY2 }}
       zqwzbody3: ${{ secrets.ZQWZBODY3 }}
       zqwzbody4: ${{ secrets.ZQWZBODY4 }}
-      TZ: Asia/shanghai
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 14.x
       - name: npm install
@@ -58,7 +58,7 @@ jobs:
       - name: '运行 【中青看点自动阅读四】'
         if: env.ZQWZBODY4
         run: |
-          node Android-Чтосмотреть-oxumaq2.js
+          node Android-Чтосмотреть-oxumaq4.js
         env:
           zqwzbody: ${{ secrets.ZQWZBODY4 }}
           zq_timebody: ${{ secrets.ZQ_TIMEBODY4 }}
