@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 14.x
       - name: npm install
@@ -29,7 +29,7 @@ jobs:
           npm install
           
       - name: '运行 【中青看点自动阅读一】'
-        if: env.YOUTH_READ
+        if: env.ZQWZBODY
         run: |
           node Task/Android-Чтосмотреть-oxumaq1.js
         env:
@@ -37,7 +37,7 @@ jobs:
           zq_timebody: ${{ secrets.ZQ_TIMEBODY }}
 
       - name: '运行 【中青看点自动阅读二】'
-        if: env.YOUTH_READ2
+        if: env.ZQWZBODY2
         run: |
           node Task/Android-Чтосмотреть-oxumaq2.js
         env:
@@ -45,7 +45,7 @@ jobs:
           zq_timebody: ${{ secrets.ZQ_TIMEBODY2 }}
           
       - name: '运行 【中青看点自动阅读三】'
-        if: env.YOUTH_READ3
+        if: env.ZQWZBODY3
         run: |
           node Task/Android-Чтосмотреть-oxumaq3.js
         env:
@@ -53,7 +53,7 @@ jobs:
           zq_timebody: ${{ secrets.ZQ_TIMEBODY3 }}
           
       - name: '运行 【中青看点自动阅读四】'
-        if: env.YOUTH_READ4
+        if: env.ZQWZBODY4
         run: |
           node Task/Android-Чтосмотреть-oxumaq4.js
         env:
