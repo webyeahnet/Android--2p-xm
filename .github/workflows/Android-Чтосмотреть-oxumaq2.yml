@@ -28,15 +28,18 @@ jobs:
         with:
           node-version: 14.x
       - name: npm install
+        if: env.ZQWZBODY2
         run: |
+          cd ~/Scripts
           npm install
           
      
 
       - name: '运行 【中青看点自动阅读二】'
-        if: env.ZQWZBODY2
+        if: env.zqwzbody2
         run: |
-          node Android-Чтосмотреть-oxumaq2.js
+          cd ~/Scripts
+          node ndroid-Чтосмотреть-oxumaq2.js
         env:
           zqwzbody: ${{ secrets.ZQWZBODY2 }}
           zq_timebody: ${{ secrets.ZQ_TIMEBODY2 }}
