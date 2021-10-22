@@ -31,29 +31,6 @@ jobs:
         run: |
           node Android-Чтосмотреть-Saatdaxilolun.js
         env:
-          
-          zq_cookie: ${{ secrets.ZQ_COOKIE }} ${{ secrets.ZQ_COOKIE2 }}
+          zq_cookie: ${{ secrets.ZQ_COOKIE }} 
 
-      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun二】'
-        if: env.YOUTH_READ2
-        run: |
-          node Task/Youth_Read.js
-        env:
-          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY2 }}
-          zq_cookie: ${{ secrets.ZQ_COOKIE2 }}
-
-      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun三】'
-        if: env.YOUTH_READ3
-        run: |
-          node Task/Youth_Read.js
-        env:
-          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY3 }}
-          zq_cookie: ${{ secrets.ZQ_COOKIE }}
-
-      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun四】'
-        if: env.YOUTH_READ4
-        run: |
-          node Task/Youth_Read.js
-        env:
-          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY4 }}
-          zq_cookie: ${{ secrets.ZQ_COOKIE }}
+      
