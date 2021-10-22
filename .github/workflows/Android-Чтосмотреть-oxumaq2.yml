@@ -1,61 +1,31 @@
-# 每日早9点到晚8点每2小时运行一次
-name: 中青自动阅读
-
+name: Android-Чтосмотреть-oxumaq2
 on:
   workflow_dispatch:
   schedule:
-     - cron: '0 */1 * * *'
+    - cron: '1 0-23/5 * * *'
   watch:
     types: started
   repository_dispatch:
     types: bean_change
-    
 jobs:
   build:
+
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
-    env:
-      
-      zqwzbody2: ${{ secrets.ZQWZBODY2 }}
-      zqwzbody3: ${{ secrets.ZQWZBODY3 }}
-      zqwzbody4: ${{ secrets.ZQWZBODY4 }}
-      
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v1
         with:
           node-version: 14.x
       - name: npm install
-        if: env.ZQWZBODY2
         run: |
-          cd ~/Scripts
           npm install
+      - name: '运行 【Android-Чтосмотреть-oxumaq2】'
+        run: |
           
-     
+          node Android-Чтосмотреть-oxumaq2.js
+        env:
 
-      - name: '运行 【中青看点自动阅读二】'
-        if: env.zqwzbody2
-        run: |
-          cd ~/Scripts
-          node ndroid-Чтосмотреть-oxumaq2.js
-        env:
-          zqwzbody: ${{ secrets.ZQWZBODY2 }}
-          zq_timebody: ${{ secrets.ZQ_TIMEBODY2 }}
-          
-      - name: '运行 【中青看点自动阅读三】'
-        if: env.ZQWZBODY3
-        run: |
-          node Android-Чтосмотреть-oxumaq3.js
-        env:
-          zqwzbody: ${{ secrets.ZQWZBODY3 }}
-          zq_timebody: ${{ secrets.ZQ_TIMEBODY3 }}
-          
-      - name: '运行 【中青看点自动阅读四】'
-        if: env.ZQWZBODY4
-        run: |
-          node Android-Чтосмотреть-oxumaq4.js
-        env:
-          zqwzbody: ${{ secrets.ZQWZBODY4 }}
-          zq_timebody: ${{ secrets.ZQ_TIMEBODY4 }}
+          zqwzbody: ${{ secrets.ZQWZBODY }}
+          zq_timebody: ${{ secrets.ZQ_TIMEBODY }}
