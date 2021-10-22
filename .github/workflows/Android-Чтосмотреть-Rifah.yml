@@ -31,7 +31,6 @@ jobs:
         run: |
           node Android-Чтосмотреть-Rifah.js
         env:
-          
           zq_cookie: ${{ secrets.ZQ_COOKIE }} ${{ secrets.ZQ_COOKIE2 }}
 
       - name: '运行 【Android-Чтосмотреть-Rifah二】'
