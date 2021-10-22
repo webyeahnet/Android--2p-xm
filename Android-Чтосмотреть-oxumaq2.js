@@ -3,7 +3,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 message = ""
 
 
-let zqwzbody= $.isNode() ? (process.env.zqwzbody2 ? process.env.zqwzbody2 : "") : ($.getdata('zqwzbody') ? $.getdata('zqwzbody') : "")
+let zqwzbody= $.isNode() ? (process.env.zqwzbody ? process.env.zqwzbody : "") : ($.getdata('zqwzbody') ? $.getdata('zqwzbody') : "")
 let zqwzbodyArr = []
 let zqwzbodys = ""
 
@@ -111,7 +111,7 @@ Object.keys(zqwzbodys).forEach((item) => {
         // date = new Date()
         // if ($.isNode() &&date.getHours() == 11 && date.getMinutes()<10) {
         //     if (message.length != 0) {
-        //            await notify.sendNotify("晶彩看点文章阅读", `${message}\n\n shaolin-kongfu`);
+        //            await notify.sendNotify("晶彩看点文章阅读", `${message}\n\n webye`);
         //     }
         // } else {
         //     $.msg($.name, "",  message)
@@ -193,6 +193,29 @@ function getzq_timebody() {
             $.msg($.name, `获取第一个阅读请求: 成功🎉`, ``)
         }
     }
+}
+
+function timejl(timeout = 0) {
+    return new Promise((resolve) => {
+        let url = {
+            url : 'https://kandian.wkandian.com/v5/user/stay.json',
+            headers : zq_timeheader,
+            body : zq_timebody1,}//xsgbody,}
+        $.post(url, async (err, resp, data) => {
+            try {
+
+                const result = JSON.parse(data)
+                if(result.success === true ){
+                    console.log('\n阅读时长：'+result.time + '秒')
+                }else{
+                    console.log('\n更新阅读时长失败')
+                }
+            } catch (e) {
+            } finally {
+                resolve()
+            }
+            },timeout)
+    })
 }
 
 function timejl(timeout = 0) {
