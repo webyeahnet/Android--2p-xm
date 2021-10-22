@@ -26,4 +26,4 @@ jobs:
           
           node Android-Чтосмотреть-birbaxın.js
         env:
-          zq_cookie: ${{ secrets.zq_cookie }}
+          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY }}
