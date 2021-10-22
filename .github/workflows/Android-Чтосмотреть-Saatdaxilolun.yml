@@ -31,6 +31,6 @@ jobs:
         run: |
           node Android-Чтосмотреть-Saatdaxilolun.js
         env:
-          zq_cookie: ${{ secrets.ZQ_COOKIE }} 
+          zq_cookie: ${{ secrets.ZQ_COOKIE }} ${{ secrets.ZQ_COOKIE2 }}
 
       
