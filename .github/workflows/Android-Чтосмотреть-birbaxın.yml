@@ -31,13 +31,13 @@ jobs:
         run: |
           node Android-Чтосмотреть-birbaxın.js
         env:
-          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY }} ${{ secrets.ZQLOOKSTARTBODY2 }}
+          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY }} ${{ secrets.ZQLOOKSTARTBODY2 }} ${{ secrets.ZQLOOKSTARTBODY3 }}
           zq_cookie: ${{ secrets.ZQ_COOKIE }}
 
       - name: '运行 【Android-Чтосмотреть-birbaxın二】'
         if: env.zqlookStartbody2
         run: |
-          node Android-Чтосмотреть-birbaxın.js
+          node Android-Чтосмотреть-??.js
         env:
           zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY6 }}
           zq_cookie: ${{ secrets.ZQ_COOKIE }}
@@ -45,7 +45,7 @@ jobs:
       - name: '运行 【Android-Чтосмотреть-birbaxın三】'
         if: env.zqlookStartbody3
         run: |
-          node Android-Чтосмотреть-birbaxın.js
+          node Android-Чтосмотреть-??.js
         env:
           zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY7 }}
           zq_cookie: ${{ secrets.ZQ_COOKIE }}
@@ -53,7 +53,7 @@ jobs:
       - name: '运行 【Android-Чтосмотреть-birbaxın四】'
         if: env.zqlookStartbody4
         run: |
-          node Android-Чтосмотреть-birbaxın.js
+          node Android-Чтосмотреть-??.js
         env:
           zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY4 }}
           zq_cookie: ${{ secrets.ZQ_COOKIE }}
