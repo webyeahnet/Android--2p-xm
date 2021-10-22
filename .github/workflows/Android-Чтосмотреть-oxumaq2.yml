@@ -31,7 +31,7 @@ jobs:
         run: |
           node Android-Чтосмотреть-oxumaq2.js
         env:
-          zqwzbody: ${{ secrets.ZQWZBODY }} ${{ secrets.ZQWZBODY2 }}
+          zqwzbody: ${{ secrets.ZQWZBODY }} ${{ secrets.ZQWZBODY1 }}
           zq_timebody: ${{ secrets.ZQ_TIMEBODY }}
 
       - name: '运行 【Android-Чтосмотреть-oxumaq2二】'
