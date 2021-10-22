@@ -2,7 +2,7 @@ name: Android-Чтосмотреть-打卡
 on:
   workflow_dispatch:
   schedule:
-    - cron: '3 21,23,1 * * *'
+    - cron: '35 5 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -12,6 +12,11 @@ jobs:
 
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
+    env:
+        zq_cookie: ${{ secrets.ZQ_COOKIE }}
+        zq_cookie2: ${{ secrets.ZQ_COOKIE2 }}
+        zq_cookie3: ${{ secrets.ZQ_COOKIE3 }}
+        zq_cookie4: ${{ secrets.ZQ_COOKIE4 }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -22,10 +27,33 @@ jobs:
         run: |
           npm install
       - name: '运行 【Android-Чтосмотреть-Saatdaxilolun】'
+        if: env.zq_cookie
         run: |
-          
           node Android-Чтосмотреть-Saatdaxilolun.js
         env:
-          zq_cookie: ${{ secrets.zq_cookie }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
-          TG_USER_ID: ${{ secrets.TG_USER_ID}}
+          
+          zq_cookie: ${{ secrets.ZQ_COOKIE }} ${{ secrets.ZQ_COOKIE2 }}
+
+      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun二】'
+        if: env.YOUTH_READ2
+        run: |
+          node Task/Youth_Read.js
+        env:
+          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY2 }}
+          zq_cookie: ${{ secrets.ZQ_COOKIE2 }}
+
+      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun三】'
+        if: env.YOUTH_READ3
+        run: |
+          node Task/Youth_Read.js
+        env:
+          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY3 }}
+          zq_cookie: ${{ secrets.ZQ_COOKIE }}
+
+      - name: '运行 【Android-Чтосмотреть-Saatdaxilolun四】'
+        if: env.YOUTH_READ4
+        run: |
+          node Task/Youth_Read.js
+        env:
+          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY4 }}
+          zq_cookie: ${{ secrets.ZQ_COOKIE }}
