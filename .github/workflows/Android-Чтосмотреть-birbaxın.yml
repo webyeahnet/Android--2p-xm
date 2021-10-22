@@ -35,7 +35,7 @@ jobs:
           zq_cookie: ${{ secrets.ZQ_COOKIE }}
 
       - name: '运行 【Android-Чтосмотреть-birbaxın二】'
-        if: env.zqlookStartbody2
+        if: env.zqlookStartbody
         run: |
           node Task/Youth_Read.js
         env:
