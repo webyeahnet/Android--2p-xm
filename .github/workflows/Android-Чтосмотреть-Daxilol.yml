@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        zqqdbody: ${{ secrets.ZQLOOKSTARTBODY }}
-        zqqdbody2: ${{ secrets.ZQLOOKSTARTBODY2 }}
-        zqqdbody3: ${{ secrets.ZQLOOKSTARTBODY3 }}
-        zqqdbody4: ${{ secrets.ZQLOOKSTARTBODY4 }}
+        zqqdbody: ${{ secrets.ZQBOXBODY }}
+        zqqdbody2: ${{ secrets.ZQBOXBODY2 }}
+        zqqdbody3: ${{ secrets.ZQBOXBODY3 }}
+        zqqdbody4: ${{ secrets.ZQBOXBODY4 }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -31,7 +31,7 @@ jobs:
         run: |
           node Android-Чтосмотреть-Daxilol.js
         env:
-          zqlookStartbody: ${{ secrets.ZQLOOKSTARTBODY }}
+          zqlookStartbody: ${{ secrets.ZQBOXBODY }}
           
 
       - name: '运行 【Android-Чтосмотреть-Daxilol二】'
