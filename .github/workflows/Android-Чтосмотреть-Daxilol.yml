@@ -2,7 +2,7 @@ name: Android-Чтосмотреть-签到
 on:
   workflow_dispatch:
   schedule:
-    - cron: 15 2 * * *
+    - cron: 15 2,3 * * *
   watch:
     types: started
   repository_dispatch:
@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        zqqdbody: ${{ secrets.ZQBOXBODY }}
-        zqqdbody2: ${{ secrets.ZQBOXBODY2 }}
-        zqqdbody3: ${{ secrets.ZQBOXBODY3 }}
-        zqqdbody4: ${{ secrets.ZQBOXBODY4 }}
+        zqqdbody: ${{ secrets.ZQQDBODY }}
+        zqqdbody2: ${{ secrets.ZQQDBODY2 }}
+        zqqdbody3: ${{ secrets.ZQQDBODY3 }}
+        zqqdbody4: ${{ secrets.ZQQDBODY4 }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
@@ -31,7 +31,7 @@ jobs:
         run: |
           node Android-Чтосмотреть-Daxilol.js
         env:
-          zqlookStartbody: ${{ secrets.ZQBOXBODY }}
+          zqqdbody: ${{ secrets.ZQQDBODY }}
           
 
       - name: '运行 【Android-Чтосмотреть-Daxilol二】'
