@@ -31,7 +31,7 @@ jobs:
         run: |
           node Android-Чтосмотреть-İrəli.js
         env:
-          zq_cookie: ${{ secrets.ZQ_COOKIE }}
+          zq_cookie: ${{ secrets.ZQ_COOKIE11 }}
 
       - name: '运行 【Android-Чтосмотреть-İrəli二】'
         if: env.YOUTH_READ2
