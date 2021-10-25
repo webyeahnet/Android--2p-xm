@@ -18,7 +18,7 @@ jobs:
         zq_cookie3: ${{ secrets.ZQ_COOKIE3 }}
         zq_cookie4: ${{ secrets.ZQ_COOKIE4 }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
