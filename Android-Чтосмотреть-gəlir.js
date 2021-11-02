@@ -1,9 +1,73 @@
-const $ = new Env("中青看点收益统计");
+/*
+中青自动提现 zq_withdraw.js，
+调用zq_cookie,zq_withdraw,zq_cash
+
+赞赏:邀请码57984759
+
+万分感谢！！！
+
+脚本地址：
+https://raw.githubusercontent.com/webye/js_scripts/main/zq/zq_withdraw.js
+定时确保在每日首次火爆转发之后（zq_share.js），一天一次
+***************************************************************************
+v2p食用说明：
+1.添加重写如下：
+https://kandian.wkandian.com/v5/wechat/withdraw2.json 重写目标 https://raw.githubusercontent.com/webye/js_scripts/main/zq/zq_withdraw.js
+2.打开app进入提现页面，选择对应金额，点击立即提现（不管当日是否已经提现，都能抓），到变量中查看到有zq_withdraw即可
+3.注意多账号用户抓包zq_withdraw时需要与zq_cookie账号顺序一致
+4.zq_cash不填默认0.3元，填的话有0.3，30两个选项（boxjs订阅中可直接修改，没有订阅的话直接新建变量即可）
+5.zq_withdraw务必与zq_cash金额一致，即修改zq_withdraw时也要修改zq_cash
+****************************************************************************
+青龙食用说明：
+1.自己抓包数据
+2.export zq_withdraw="p=xxx"(多账号用@隔开)
+3.export zq_cash="0.3"或者export zq_cash="30"，不填默认30
+4.多账号用户抓包zq_withdraw时需要与zq_cookie账号顺序一致
+5.zq_withdraw务必与zq_cash金额一致，即修改zq_withdraw时也要修改zq_cash
+*/
+
+const $ = new Env("中青看点提现");
 const notify = $.isNode() ? require('./sendNotify') : '';
 message = ""
+let zq_withdraw= $.isNode() ? (process.env.zq_withdraw ? process.env.zq_withdraw : "") : ($.getdata('zq_withdraw') ? $.getdata('zq_withdraw') : "")
+let zq_withdrawArr = []
+let zq_withdraws = ""
+let zq_cash = $.isNode() ? (process.env.zq_cash ? process.env.zq_cash : "30") : ($.getdata('zq_cash') ? $.getdata('zq_cash') : "30")
 let zq_cookie= $.isNode() ? (process.env.zq_cookie ? process.env.zq_cookie : "") : ($.getdata('zq_cookie') ? $.getdata('zq_cookie') : "")
 let zq_cookieArr = []
 let zq_cookies = ""
+let nowmoney;
+
+
+var time1 = Date.parse(new Date()).toString();
+time1 = time1.substr(0, 10);
+if (zq_withdraw) {
+    if (zq_withdraw.indexOf("@") == -1 && zq_withdraw.indexOf("@") == -1) {
+        zq_withdrawArr.push(zq_withdraw)
+    } else if (zq_withdraw.indexOf("@") > -1) {
+        zq_withdraws = zq_withdraw.split("@")
+    } else if (process.env.zq_withdraw && process.env.zq_withdraw.indexOf('@') > -1) {
+        zq_withdrawArr = process.env.zq_withdraw.split('@');
+        console.log(`您选择的是用"@"隔开\n`)
+    }
+} else if($.isNode()){
+    var fs = require("fs");
+    zq_withdraw = fs.readFileSync("zq_withdraw.txt", "utf8");
+    if (zq_withdraw !== `undefined`) {
+        zq_withdraws = zq_withdraw.split("\n");
+    } else {
+        $.msg($.name, '【提示】请先完成一次提现，明天再跑一次脚本', '不知道说啥好', {
+            "open-url": "给您劈个叉吧"
+        });
+
+        $.done()
+    }
+};
+Object.keys(zq_withdraws).forEach((item) => {
+    if (zq_withdraws[item] && !zq_withdraws[item].startsWith("#")) {
+        zq_withdrawArr.push(zq_withdraws[item])
+    }
+})
 
 if (zq_cookie) {
     if (zq_cookie.indexOf("@") == -1 && zq_cookie.indexOf("@") == -1) {
@@ -34,7 +98,7 @@ Object.keys(zq_cookies).forEach((item) => {
 
 !(async () => {
      if (typeof $request !== "undefined") {
-    getzq_cookie()
+    getbody()
      $.done()
  }else {
          console.log(`共${zq_cookieArr.length}个cookie`)
@@ -44,13 +108,14 @@ Object.keys(zq_cookies).forEach((item) => {
              cookie = bodyVal.replace(/zqkey=/, "cookie=")
              cookie_id = cookie.replace(/zqkey_id=/, "cookie_id=")
              zq_cookie1 = cookie_id + '&' + bodyVal
-             zq_cookie2 = 'uid='+zq_cookieArr[k].split('&uid=')[1] + '&'+ bodyVal
              //待处理cookie
-             console.log(`${zq_cookie1}`)
              console.log(`--------第 ${k + 1} 个账号收益查询中--------\n`)
-             await nickname(zq_cookie2)
+             zq_withdraw1 = zq_withdrawArr[k]
+             await today_score(zq_cookie1)
+
+
              if ($.message.length != 0) {
-                 message += "账号" + (k + 1) + "： \n" + $.message + " \n"
+                 message += "账号" + (k + 1) + "：  " + $.message + " \n"
              }
              await $.wait(4000);
              console.log("\n\n")
@@ -58,38 +123,46 @@ Object.keys(zq_cookies).forEach((item) => {
 
 
          if (message.length != 0) {
-             await notify ? notify.sendNotify("中青看点收益查询", `${message}\n\n Android-Чтосмотреть-gəlir`) :
-                 $.msg($.name, "中青看点收益查询", `${message}\n\nAndroid-Чтосмотреть-gəlir`);
+             await notify ? notify.sendNotify("中青看点提现", `${message}\n\n webye`) :
+                 $.msg($.name, "中青看点提现", `${message}\n\n webye`);
          } else if ($.isNode()) {
-             await notify.sendNotify("中青看点收益查询", `${message}\n\nAndroid-Чтосмотреть-gəlir`);
+             await notify.sendNotify("中青看点提现", `${message}\n\nwebye`);
          }
      }
      })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
-function nickname(zq_cookie2,timeout = 0) {
+
+
+function withdraw(zq_withdraw1,timeout = 0) {
     return new Promise((resolve) => {
         let url = {
-            url : 'https://kandian.wkandian.com/v17/NewTask/getSign.json?'+ zq_cookie2,
+            url : 'https://kandian.wkandian.com/v5/wechat/withdraw2.json',
             headers : {
-    'Host': 'kandian.wkandian.com'
-},
-            }
-        $.get(url, async (err, resp, data) => {
+            'request_time': time1,
+            'device-platform': 'android' ,
+            'app-version': '8.1.2',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': zq_withdraw1.length.toString(),
+            'Host': 'kandian.wkandian.com',
+            'Connection': 'Keep-Alive',
+            'Accept-Encoding': 'gzip',
+            'User-Agent': 'okhttp/3.12.2'
+            },
+            body : zq_withdraw1,}
+        $.post(url, async (err, resp, data) => {
             try {
 
                 const result = JSON.parse(data)
-                if(result.success == true){
-                    console.log('\n昵称:'+result.items.user.nickname)
-                    nickname1 =result.items.user.nickname
-                    await $.wait(1000);
-                    await today_score(zq_cookie1,nickname1)
-                  
-            
-                }else{
-                     console.log(result)
-                }
+            if (result.error_code == 0) {
+               console.log(result)
+                console.log(`【自动提现】提现${zq_cash}元成功\n`)
+                $.message = `【自动提现】提现${zq_cash}元成功\n`
+                //$.msg($.name,$.sub,$.desc)
+            } else {
+                console.log(result)
+            }
             } catch (e) {
             } finally {
                 resolve()
@@ -97,64 +170,6 @@ function nickname(zq_cookie2,timeout = 0) {
             },timeout)
     })
 }
-function today_score(zq_cookie1,nickname1,timeout = 0) {
-    return new Promise((resolve) => {
-        let url = {
-            url : 'https://kandian.wkandian.com/wap/user/balance?'+ zq_cookie1,
-            headers : {
-    'Host': 'kandian.wkandian.com'
-},
-            }
-        $.get(url, async (err, resp, data) => {
-            try {
-
-                const result = JSON.parse(data)
-                if(result.status == 0){
-                    console.log('\n今日收益总计:'+result.user.today_score)
-                    console.log('\n当前金币总数:'+result.user.score)
-                    console.log('\n折合人民币总数:'+result.user.money)
-                    $.message = `\n今日收益总计:${result.user.today_score}金币\n当前金币总数:${result.user.score}金币 \n折合人民币总数:${result.user.money}元`
-                    //$.msg($.name, "", `昵称:${nickname1}\n今日收益总计:${result.user.today_score}金币\n当前金币总数:${result.user.score}金币 \n折合人民币总数:${result.user.money}元`);
-                }else{
-                     console.log(result)
-                }
-            } catch (e) {
-            } finally {
-                resolve()
-            }
-            },timeout)
-    })
-}
-
-
-
-async function getzq_cookie() {
-    if ($request.url.match(/\/kandian.wkandian.com\/v17\/NewTask\/getTaskList/)) {
-          bodyVal1 = $request.url.split('?')[1]
-          bodyVal2 = bodyVal1.split('&token')[0]
-          bodyVal3 = bodyVal2.split('&zqkey=')[1]
-          bodyVal4 = bodyVal2.split('&uid=')[1]
-          bodyVal5 = bodyVal4.split('&version_code=')[0]
-          bodyVal =  'zqkey='+ bodyVal3 + '&uid='+ bodyVal5
-        if (zq_cookie) {
-            if (zq_cookie.indexOf(bodyVal5) > -1) {
-                $.log("此cookie已存在，本次跳过")
-            } else if (zq_cookie.indexOf(bodyVal5) === -1) {
-                zq_cookies = zq_cookie + "@" + bodyVal;
-                $.setdata(zq_cookies, 'zq_cookie');
-                $.log(`${$.name}获取cookie: 成功, zq_cookies: ${bodyVal}`);
-                bodys = zq_cookies.split("@")
-                // $.msg($.name, "获取第" + bodys.length + "个阅读请求: 成功🎉", ``)
-            }
-        } else {
-            $.setdata(bodyVal, 'zq_cookie');
-            $.log(`${$.name}获取cookie: 成功, zq_cookies: ${bodyVal}`);
-            $.msg($.name, `获取第一个cookie: 成功🎉`, ``)
-        }
-    }
-
-  }
-
 
 
 function Env(t, e) {
