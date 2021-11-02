@@ -1,4 +1,4 @@
-name: Android-Чтосмотреть-收益
+name: Android-Чтосмотреть-收益提现
 on:
   workflow_dispatch:
   schedule:
@@ -26,6 +26,6 @@ jobs:
           
           node Android-Чтосмотреть-gəlir.js
         env:
-          zq_cookie: ${{ secrets.zq_cookie }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
-          TG_USER_ID: ${{ secrets.TG_USER_ID}}
+          zq_cookie: ${{ secrets.ZQ_COOKIE }}
+          zq_withdraw: ${{ secrets.ZQ_WITHDRAW}}
+          
