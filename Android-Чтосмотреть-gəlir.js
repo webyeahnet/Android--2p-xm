@@ -172,6 +172,64 @@ function withdraw(zq_withdraw1,timeout = 0) {
 }
 
 
+function getbody() {
+    if ($request.url.match(/\/kandian.wkandian.com\/v5\/wechat\/withdraw2.json/)) {
+          bodyVal=$request.body
+            console.log(bodyVal)
+        if (zq_withdraw) {
+            if (zq_withdraw.indexOf(bodyVal) > -1) {
+                $.log("此提现请求已存在，本次跳过")
+            } else if (zq_withdraw.indexOf(bodyVal) == -1) {
+                zq_withdraws = zq_withdraw + "@" + bodyVal;
+                $.setdata(zq_withdraws,'zq_withdraw');
+                $.log(`${$.name}获取提现: 成功, zq_withdraws: ${bodyVal}`);
+                bodys = zq_withdraws.split("@")
+                 $.msg($.name, "获取第" + bodys.length + "个提现请求: 成功🎉", ``)
+            }
+        } else {
+            $.setdata($request.body,'zq_withdraw');
+            $.log(`${$.name}获取提现: 成功, zq_withdraws: ${bodyVal}`);
+            $.msg($.name, `获取第一个提现请求: 成功🎉`, ``)
+        }
+    }
+}
+
+
+function today_score(zq_cookie1,timeout = 0) {
+    return new Promise((resolve) => {
+        let url = {
+            url : 'https://kandian.wkandian.com/wap/user/balance?'+ zq_cookie1,
+            headers : {
+    'Host': 'kandian.wkandian.com'
+},
+            }
+        $.get(url, async (err, resp, data) => {
+            try {
+
+                const result = JSON.parse(data)
+                if(result.status == 0){
+
+                    console.log('\n当前金币总数:'+result.user.score)
+                    console.log('\n折合人民币总数:'+result.user.money)
+                    nowmoney = result.user.money
+                    if(nowmoney >= zq_cash){
+                        await $.wait(3000);
+                        await withdraw(zq_withdraw1)
+                    }
+                    $.message = `当前金币总数:${result.user.score} \n 折合人民币总数:${result.user.money}元`
+                    //$.msg($.name, "", `当前金币总数:${result.user.score} \n 折合人民币总数:${result.user.money}元`);
+                }else{
+                     console.log(result)
+                }
+            } catch (e) {
+            } finally {
+                resolve()
+            }
+            },timeout)
+    })
+}
+
+
 function Env(t, e) {
     class s {
         constructor(t) {
