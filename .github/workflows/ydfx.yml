@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        zq_cookie: ${{ secrets.ZQ_COOKIE }}
+        zq_cookie: ${{ secrets.ZQ_COOKIE11 }}
         zq_cookie2: ${{ secrets.ZQ_COOKIE21 }}
     steps:
       - uses: actions/checkout@v2
@@ -29,4 +29,4 @@ jobs:
         run: |
           node zq_share_read.js
         env:
-          zq_cookie: ${{ secrets.ZQ_COOKIE }} 
+          zq_cookie: ${{ secrets.ZQ_COOKIE11 }} 
