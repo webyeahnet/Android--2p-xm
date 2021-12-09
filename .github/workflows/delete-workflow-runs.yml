@@ -125,7 +125,7 @@ jobs:
               page: page,
               per_page: 100,
               repo: context.repo.repo,
-              workflow_id: 'workflow_run_pruner.yml'
+              workflow_id: 'delete-workflow-runs.yml'
             });
 
             if (response.data.workflow_runs.length > 0) {
